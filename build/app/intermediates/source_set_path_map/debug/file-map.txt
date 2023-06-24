@@ -1,0 +1,15 @@
+com.example.isar_learning.app-jetified-window-java-1.0.0-beta04-0 /Users/livingstonantony/.gradle/caches/transforms-3/006d93cd422dbc43e89591147c2de572/transformed/jetified-window-java-1.0.0-beta04/res
+com.example.isar_learning.app-core-1.6.0-1 /Users/livingstonantony/.gradle/caches/transforms-3/4ca28c4a71705f8a687c69dda140a277/transformed/core-1.6.0/res
+com.example.isar_learning.app-jetified-annotation-experimental-1.1.0-2 /Users/livingstonantony/.gradle/caches/transforms-3/8965c941cf4bee4d72541b965c7c9d39/transformed/jetified-annotation-experimental-1.1.0/res
+com.example.isar_learning.app-jetified-window-1.0.0-beta04-3 /Users/livingstonantony/.gradle/caches/transforms-3/dee59bb480020f42d53c2ea15e4501f7/transformed/jetified-window-1.0.0-beta04/res
+com.example.isar_learning.app-jetified-startup-runtime-1.1.1-4 /Users/livingstonantony/.gradle/caches/transforms-3/ff5f5b0a71e9b3e49766bc82725fe9a1/transformed/jetified-startup-runtime-1.1.1/res
+com.example.isar_learning.app-debug-5 /Users/livingstonantony/Downloads/Learning/Flutter-Learning/isar_learning/android/app/src/debug/res
+com.example.isar_learning.app-main-6 /Users/livingstonantony/Downloads/Learning/Flutter-Learning/isar_learning/android/app/src/main/res
+com.example.isar_learning.app-pngs-7 /Users/livingstonantony/Downloads/Learning/Flutter-Learning/isar_learning/build/app/generated/res/pngs/debug
+com.example.isar_learning.app-resValues-8 /Users/livingstonantony/Downloads/Learning/Flutter-Learning/isar_learning/build/app/generated/res/resValues/debug
+com.example.isar_learning.app-rs-9 /Users/livingstonantony/Downloads/Learning/Flutter-Learning/isar_learning/build/app/generated/res/rs/debug
+com.example.isar_learning.app-mergeDebugResources-10 /Users/livingstonantony/Downloads/Learning/Flutter-Learning/isar_learning/build/app/intermediates/incremental/debug/mergeDebugResources/merged.dir
+com.example.isar_learning.app-mergeDebugResources-11 /Users/livingstonantony/Downloads/Learning/Flutter-Learning/isar_learning/build/app/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+com.example.isar_learning.app-merged_res-12 /Users/livingstonantony/Downloads/Learning/Flutter-Learning/isar_learning/build/app/intermediates/merged_res/debug
+com.example.isar_learning.app-packaged_res-13 /Users/livingstonantony/Downloads/Learning/Flutter-Learning/isar_learning/build/isar_flutter_libs/intermediates/packaged_res/debug
+com.example.isar_learning.app-packaged_res-14 /Users/livingstonantony/Downloads/Learning/Flutter-Learning/isar_learning/build/path_provider_android/intermediates/packaged_res/debug
