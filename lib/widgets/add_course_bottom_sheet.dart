@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:isar_learning/data/course.dart';
 import 'package:isar_learning/service/isar_service.dart';
+import 'package:isar_learning/widgets/custom_button.dart';
 
 class AddCourseBottomSheet extends StatelessWidget {
   const AddCourseBottomSheet({

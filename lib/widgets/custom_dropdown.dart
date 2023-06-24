@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:isar_learning/data/course.dart';
 import 'package:isar_learning/service/isar_service.dart';
 
 class CustomDropDown extends StatefulWidget {
-  const CustomDropDown({super.key});
+  final ValueChanged<Course?> onChanged;
+
+  const CustomDropDown({super.key, required this.onChanged});
 
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();
 }
 
 class _CustomDropDownState extends State<CustomDropDown> {
-  String? dropdownValue;
-  List<String>? spinnerItems;
+  // List<String>? spinnerItems;
+  List<Course>? courses;
+  Course? _course;
   IsarService isarService = IsarService();
 
   @override
   void initState() {
     isarService.getAllCourses().then((value) {
       setState(() {
-        spinnerItems = value.map((e) => e.title).toList();
-        dropdownValue = spinnerItems?[0];
+        // spinnerItems = value.map((e) => e.title).toList();
+        courses = value;
+        _course = value[0];
+        // dropdownValue = spinnerItems?[0];
+        widget.onChanged.call(_course);
       });
     });
     super.initState();
@@ -32,12 +39,12 @@ class _CustomDropDownState extends State<CustomDropDown> {
       decoration: BoxDecoration(
           color: Colors.green.shade50,
           borderRadius: const BorderRadius.all(Radius.circular(8))),
-      child: dropdownValue == null
+      child: _course == null
           ? const CircularProgressIndicator()
           : DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
+              child: DropdownButton<Course>(
                 isExpanded: true,
-                value: dropdownValue,
+                value: _course,
                 icon: const Icon(
                   Icons.arrow_forward_ios,
                   color: Colors.green,
@@ -55,16 +62,16 @@ class _CustomDropDownState extends State<CustomDropDown> {
                   height: 2,
                   color: Colors.green.shade300,
                 ),
-                onChanged: (String? data) {
+                onChanged: (Course? data) {
                   setState(() {
-                    dropdownValue = data;
+                    _course = data;
+                    widget.onChanged.call(data);
                   });
                 },
-                items:
-                    spinnerItems?.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
+                items: courses?.map<DropdownMenuItem<Course>>((Course value) {
+                  return DropdownMenuItem<Course>(
                     value: value,
-                    child: Text(value),
+                    child: Text(value.title),
                   );
                 }).toList(),
               ),

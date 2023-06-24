@@ -21,9 +21,9 @@ class IsarService {
     return isar.writeTxnSync<int>(() => isar.courses.putSync(newCourse));
   }
 
-  Future<void> saveTeacher(Teacher newTeacher) async {
+  Future<int> saveTeacher(Teacher newTeacher) async {
     final isar = await db;
-    isar.writeTxnSync<int>(() => isar.teachers.putSync(newTeacher));
+    return isar.writeTxnSync<int>(() => isar.teachers.putSync(newTeacher));
   }
 
   Future<void> saveStudent(Student newStudent) async {

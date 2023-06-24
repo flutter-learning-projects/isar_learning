@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:isar_learning/data/course.dart';
+import 'package:isar_learning/data/teacher.dart';
+import 'package:isar_learning/service/isar_service.dart';
+import 'package:isar_learning/widgets/custom_button.dart';
+import 'package:isar_learning/widgets/custom_dropdown.dart';
 
-class AddTeacherBottomSheet extends StatelessWidget {
+class AddTeacherBottomSheet extends StatefulWidget {
   const AddTeacherBottomSheet({
     super.key,
-    required this.controllerAddCourse,
+    required this.controllerAddTeacher,
+    required this.isarService,
   });
 
-  final TextEditingController controllerAddCourse;
+  final TextEditingController controllerAddTeacher;
+  final IsarService isarService;
+
+  @override
+  State<AddTeacherBottomSheet> createState() => _AddTeacherBottomSheetState();
+}
+
+class _AddTeacherBottomSheetState extends State<AddTeacherBottomSheet> {
+  Course? _course;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +46,7 @@ class AddTeacherBottomSheet extends StatelessWidget {
             height: 8,
           ),
           TextField(
-            controller: controllerAddCourse,
+            controller: widget.controllerAddTeacher,
             decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.green.shade50,
@@ -44,8 +58,7 @@ class AddTeacherBottomSheet extends StatelessWidget {
                     textStyle: Theme.of(context)
                         .textTheme
                         .bodySmall
-                        ?.copyWith(
-                            color: Colors.grey.shade600, fontSize: 14))),
+                        ?.copyWith(color: Colors.grey.shade600, fontSize: 14))),
             style: GoogleFonts.dmSans(
                 textStyle: Theme.of(context)
                     .textTheme
@@ -55,13 +68,32 @@ class AddTeacherBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          const CustomDropDown(),
+          CustomDropDown(
+            onChanged: (Course? data) {
+              _course = data;
+              print('current course: ${_course?.title}');
+            },
+          ),
           const SizedBox(
             height: 35,
           ),
           CustomButton(
             onTap: () {
-              print('Button clicked');
+              var teacher = Teacher();
+              teacher.name = widget.controllerAddTeacher.text;
+              teacher.course.value = _course;
+              Future<int> future = widget.isarService.saveTeacher(teacher);
+
+              widget.controllerAddTeacher.clear();
+
+              future.then((int value) {
+                // Invoked when the future is completed with a value.
+                print(
+                    'value : $value'); // The successor is completed with the value 42.
+              }, onError: (e) {
+                print('error: $e');
+                // Invoked when the future is completed with an error.
+              });
               Navigator.of(context).pop();
             },
             buttonText: "Add Teacher",
