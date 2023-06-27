@@ -87,12 +87,21 @@ class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
           const SizedBox(
             height: 15,
           ),
+          _chipsList(courses
+                  ?.where((element) => element.isSelected == true)
+                  .toList() ??
+              List.empty()),
           CustomButton(
             onTap: () {
               showDialog(
                   context: context,
                   builder: (BuildContext context) => CustomMultiSelection(
                         courses: courses,
+                        coureseCallback: (value) {
+                          setState(() {
+                            courses = value;
+                          });
+                        },
                       ));
             },
             buttonText: "Select Courses",
@@ -111,6 +120,42 @@ class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _chipsList(List<Course> list) {
+    return Column(
+      children: [
+        Wrap(
+          spacing: 6.0,
+          runSpacing: 6.0,
+          children:
+              list.map((e) => _buildChip(e.title, Colors.blueAccent)).toList(),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildChip(String label, Color color) {
+    return Chip(
+      labelPadding: const EdgeInsets.all(2.0),
+      avatar: CircleAvatar(
+        backgroundColor: Colors.white70,
+        child: Text(label[0].toUpperCase()),
+      ),
+      label: Text(
+        label,
+        style: const TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: color,
+      elevation: 1.0,
+      shadowColor: Colors.grey[60],
+      padding: const EdgeInsets.only(left: 6, right: 8, top: 6, bottom: 6),
     );
   }
 }

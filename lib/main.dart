@@ -41,7 +41,6 @@ class _BottomSheetPageState extends State<BottomSheetTestPage> {
   void initState() {
     IsarService isar = IsarService();
     isar.getAllCourses().then((value) {
-      print('all courses: $value');
       setState(() {
         courses = value;
       });

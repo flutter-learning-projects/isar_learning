@@ -5,9 +5,11 @@ class CustomMultiSelection extends StatefulWidget {
   const CustomMultiSelection({
     super.key,
     required this.courses,
+    required this.coureseCallback,
   });
 
   final List<Course>? courses;
+  final ValueChanged<List<Course>?> coureseCallback;
 
   @override
   State<CustomMultiSelection> createState() => _CustomMultiSelectionState();
@@ -52,7 +54,7 @@ class _CustomMultiSelectionState extends State<CustomMultiSelection> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('CANCEL'),
+          child: const Text('CANCEL'),
         ),
         TextButton(
             style: ButtonStyle(
@@ -71,6 +73,7 @@ class _CustomMultiSelectionState extends State<CustomMultiSelection> {
               ),
             ),
             onPressed: () {
+              widget.coureseCallback.call(widget.courses);
               Navigator.of(context).pop();
             },
             child: const Text('OK'))
@@ -92,11 +95,11 @@ class _CustomMultiSelectionState extends State<CustomMultiSelection> {
                     itemBuilder: (context, index) {
                       return CheckboxListTile(
                         title: Text(widget.courses?[index].title ?? '--:--'),
-                        value: checkedItems?[index],
+                        value: widget.courses?[index].isSelected,
                         onChanged: (value) {
                           setState(() {
-                            checkedItems?[index] =
-                                !(checkedItems?[index] == true);
+                            widget.courses?[index].isSelected =
+                                !(widget.courses?[index].isSelected == true);
                           });
                         },
                       );

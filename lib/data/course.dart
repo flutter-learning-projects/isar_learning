@@ -8,12 +8,14 @@ class Course {
   Id id = Isar.autoIncrement;
   final String title;
 
+  @ignore
+  bool isSelected = false;
+
   Course(this.title);
-  
+
   @Backlink(to: "course")
   final teacher = IsarLink<Teacher>();
 
   @Backlink(to: "courses")
   final students = IsarLinks<Student>();
-
 }

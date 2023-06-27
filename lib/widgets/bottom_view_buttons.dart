@@ -52,7 +52,7 @@ class _BottomViewButtonsState extends State<BottomViewButtons> {
               onTap: () {
                 _showBottomSheetAddAddStudent(context);
               },
-              buttonText: 'Add Studen',
+              buttonText: 'Add Student',
             ),
           ),
           const SizedBox(
