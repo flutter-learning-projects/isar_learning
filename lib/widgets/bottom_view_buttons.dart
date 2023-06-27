@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:isar_learning/service/isar_service.dart';
 import 'package:isar_learning/widgets/add_course_bottom_sheet.dart';
+import 'package:isar_learning/widgets/add_student_bottom_sheet.dart';
 import 'package:isar_learning/widgets/add_teacher_bottom_sheet.dart';
 import 'package:isar_learning/widgets/custom_button.dart';
 
@@ -12,16 +13,7 @@ class BottomViewButtons extends StatefulWidget {
 }
 
 class _BottomViewButtonsState extends State<BottomViewButtons> {
-  final controllerAddCourse = TextEditingController();
-  final controllerAddTeacher = TextEditingController();
   IsarService isarService = IsarService();
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    controllerAddCourse.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +49,9 @@ class _BottomViewButtonsState extends State<BottomViewButtons> {
           Container(
             margin: const EdgeInsets.only(left: 10, right: 10),
             child: CustomButton(
-              onTap: () {},
+              onTap: () {
+                _showBottomSheetAddAddStudent(context);
+              },
               buttonText: 'Add Studen',
             ),
           ),
@@ -76,8 +70,7 @@ class _BottomViewButtonsState extends State<BottomViewButtons> {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return AddCourseBottomSheet(
-            controllerAddCourse: controllerAddCourse, isarService: isarService);
+        return AddCourseBottomSheet(isarService: isarService);
       },
     );
   }
@@ -90,7 +83,20 @@ class _BottomViewButtonsState extends State<BottomViewButtons> {
       isScrollControlled: true,
       builder: (BuildContext context) {
         return AddTeacherBottomSheet(
-          controllerAddTeacher: controllerAddTeacher,
+          isarService: isarService,
+        );
+      },
+    );
+  }
+
+  Future<void> _showBottomSheetAddAddStudent(BuildContext context) {
+    return showModalBottomSheet<void>(
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(15.0))),
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return AddStudentBottomSheet(
           isarService: isarService,
         );
       },

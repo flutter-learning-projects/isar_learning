@@ -3,28 +3,45 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:isar_learning/data/course.dart';
 import 'package:isar_learning/service/isar_service.dart';
 import 'package:isar_learning/widgets/custom_button.dart';
+import 'package:isar_learning/widgets/custom_multiselection.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
-class AddCourseBottomSheet extends StatefulWidget {
-   const AddCourseBottomSheet({
-    super.key,
-    required this.isarService,
-  });
-
+class AddStudentBottomSheet extends StatefulWidget {
   final IsarService isarService;
 
+  const AddStudentBottomSheet({super.key, required this.isarService});
+
   @override
-  State<AddCourseBottomSheet> createState() => _AddCourseBottomSheetState();
+  State<AddStudentBottomSheet> createState() => _AddStudentBottomSheetState();
 }
 
-class _AddCourseBottomSheetState extends State<AddCourseBottomSheet> {
-  final controllerAddCourse = TextEditingController();
+class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
+  IsarService isarService = IsarService();
+  List<Course>? courses;
+  Course? _course;
 
-@override
+  final controllerAddStudent = TextEditingController();
+
+  @override
+  void initState() {
+    isarService.getAllCourses().then((value) {
+      setState(() {
+        // spinnerItems = value.map((e) => e.title).toList();
+        courses = value;
+        // dropdownValue = spinnerItems?[0];
+      });
+    });
+
+    super.initState();
+  }
+
+  @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
-    controllerAddCourse.dispose();
+    controllerAddStudent.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,7 +54,7 @@ class _AddCourseBottomSheetState extends State<AddCourseBottomSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text('Give your new course a name',
+          Text('Add new teacher',
               style: GoogleFonts.dmSans(
                 textStyle: Theme.of(context)
                     .textTheme
@@ -45,17 +62,17 @@ class _AddCourseBottomSheetState extends State<AddCourseBottomSheet> {
                     ?.copyWith(fontWeight: FontWeight.w500),
               ).copyWith(color: Colors.black)),
           const SizedBox(
-            height: 15,
+            height: 8,
           ),
           TextField(
-            controller: controllerAddCourse,
+            controller: controllerAddStudent,
             decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.green.shade50,
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide.none),
-                hintText: 'Enter a course name',
+                hintText: 'Enter teacher name',
                 hintStyle: GoogleFonts.dmSans(
                     textStyle: Theme.of(context)
                         .textTheme
@@ -68,26 +85,26 @@ class _AddCourseBottomSheetState extends State<AddCourseBottomSheet> {
                     ?.copyWith(color: Colors.black, fontSize: 14)),
           ),
           const SizedBox(
-            height: 35,
+            height: 15,
           ),
           CustomButton(
             onTap: () {
-              print('Button clicked');
-              Future<int> future =
-                  widget.isarService.saveCourse(Course(controllerAddCourse.text));
-
-              controllerAddCourse.clear();
-              future.then((int value) {
-                // Invoked when the future is completed with a value.
-                print(
-                    'value : $value'); // The successor is completed with the value 42.
-              }, onError: (e) {
-                print('error: $e');
-                // Invoked when the future is completed with an error.
-              });
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => CustomMultiSelection(
+                        courses: courses,
+                      ));
+            },
+            buttonText: "Select Courses",
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          CustomButton(
+            onTap: () {
               Navigator.of(context).pop();
             },
-            buttonText: "Add a new course",
+            buttonText: "Add Student",
           ),
           const SizedBox(
             height: 30,

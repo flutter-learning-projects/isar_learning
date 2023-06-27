@@ -9,11 +9,9 @@ import 'package:isar_learning/widgets/custom_dropdown.dart';
 class AddTeacherBottomSheet extends StatefulWidget {
   const AddTeacherBottomSheet({
     super.key,
-    required this.controllerAddTeacher,
     required this.isarService,
   });
 
-  final TextEditingController controllerAddTeacher;
   final IsarService isarService;
 
   @override
@@ -22,6 +20,14 @@ class AddTeacherBottomSheet extends StatefulWidget {
 
 class _AddTeacherBottomSheetState extends State<AddTeacherBottomSheet> {
   Course? _course;
+
+  final controllerAddTeacher = TextEditingController();
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    controllerAddTeacher.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +52,7 @@ class _AddTeacherBottomSheetState extends State<AddTeacherBottomSheet> {
             height: 8,
           ),
           TextField(
-            controller: widget.controllerAddTeacher,
+            controller: controllerAddTeacher,
             decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.green.shade50,
@@ -80,11 +86,11 @@ class _AddTeacherBottomSheetState extends State<AddTeacherBottomSheet> {
           CustomButton(
             onTap: () {
               var teacher = Teacher();
-              teacher.name = widget.controllerAddTeacher.text;
+              teacher.name = controllerAddTeacher.text;
               teacher.course.value = _course;
               Future<int> future = widget.isarService.saveTeacher(teacher);
 
-              widget.controllerAddTeacher.clear();
+              controllerAddTeacher.clear();
 
               future.then((int value) {
                 // Invoked when the future is completed with a value.
