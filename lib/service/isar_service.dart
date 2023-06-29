@@ -26,9 +26,12 @@ class IsarService {
     return isar.writeTxnSync<int>(() => isar.teachers.putSync(newTeacher));
   }
 
-  Future<void> saveStudent(Student newStudent) async {
+  Future<int> saveStudent(Student newStudent) async {
     final isar = await db;
-    isar.writeTxnSync<int>(() => isar.students.putSync(newStudent));
+    var status =
+        isar.writeTxnSync<int>(() => isar.students.putSync(newStudent));
+    // isar.courses.sy
+    return status;
   }
 
   Future<List<Course>> getAllCourses() async {
@@ -39,6 +42,16 @@ class IsarService {
   Stream<List<Course>> listenToCourse() async* {
     final isar = await db;
     yield* isar.courses.where().watch();
+  }
+
+  Stream<List<Student>> listenToStudent() async* {
+    final isar = await db;
+    yield* isar.students.where().watch();
+  }
+
+  Stream<List<Teacher>> listenToTeacher() async* {
+    final isar = await db;
+    yield* isar.teachers.where().watch();
   }
 
   Future<List<Student>> getStudentsFor(Course course) async {

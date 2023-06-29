@@ -6,15 +6,14 @@ import 'package:isar_learning/widgets/add_teacher_bottom_sheet.dart';
 import 'package:isar_learning/widgets/custom_button.dart';
 
 class BottomViewButtons extends StatefulWidget {
-  const BottomViewButtons({super.key});
+  final IsarService isarService;
+  const BottomViewButtons({super.key, required this.isarService});
 
   @override
   State<BottomViewButtons> createState() => _BottomViewButtonsState();
 }
 
 class _BottomViewButtonsState extends State<BottomViewButtons> {
-  IsarService isarService = IsarService();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +25,7 @@ class _BottomViewButtonsState extends State<BottomViewButtons> {
             margin: const EdgeInsets.only(left: 10, right: 10),
             child: CustomButton(
               onTap: () {
-                _showBottomSheetAddCourse(context);
+                _showBottomSheetAddCourse(context, widget.isarService);
               },
               buttonText: 'Add a new course',
             ),
@@ -38,7 +37,7 @@ class _BottomViewButtonsState extends State<BottomViewButtons> {
             margin: const EdgeInsets.only(left: 10, right: 10),
             child: CustomButton(
               onTap: () {
-                _showBottomSheetAddTeacher(context);
+                _showBottomSheetAddTeacher(context, widget.isarService);
               },
               buttonText: 'Add Teacher',
             ),
@@ -50,7 +49,7 @@ class _BottomViewButtonsState extends State<BottomViewButtons> {
             margin: const EdgeInsets.only(left: 10, right: 10),
             child: CustomButton(
               onTap: () {
-                _showBottomSheetAddAddStudent(context);
+                _showBottomSheetAddAddStudent(context, widget.isarService);
               },
               buttonText: 'Add Student',
             ),
@@ -63,7 +62,8 @@ class _BottomViewButtonsState extends State<BottomViewButtons> {
     );
   }
 
-  Future<void> _showBottomSheetAddCourse(BuildContext context) {
+  Future<void> _showBottomSheetAddCourse(
+      BuildContext context, IsarService isarService) {
     return showModalBottomSheet<void>(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(15.0))),
@@ -75,7 +75,8 @@ class _BottomViewButtonsState extends State<BottomViewButtons> {
     );
   }
 
-  Future<void> _showBottomSheetAddTeacher(BuildContext context) {
+  Future<void> _showBottomSheetAddTeacher(
+      BuildContext context, IsarService isarService) {
     return showModalBottomSheet<void>(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(15.0))),
@@ -89,7 +90,8 @@ class _BottomViewButtonsState extends State<BottomViewButtons> {
     );
   }
 
-  Future<void> _showBottomSheetAddAddStudent(BuildContext context) {
+  Future<void> _showBottomSheetAddAddStudent(
+      BuildContext context, IsarService isarService) {
     return showModalBottomSheet<void>(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(15.0))),

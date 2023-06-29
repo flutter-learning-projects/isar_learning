@@ -5,7 +5,7 @@ import 'package:isar_learning/service/isar_service.dart';
 import 'package:isar_learning/widgets/custom_button.dart';
 
 class AddCourseBottomSheet extends StatefulWidget {
-   const AddCourseBottomSheet({
+  const AddCourseBottomSheet({
     super.key,
     required this.isarService,
   });
@@ -19,12 +19,13 @@ class AddCourseBottomSheet extends StatefulWidget {
 class _AddCourseBottomSheetState extends State<AddCourseBottomSheet> {
   final controllerAddCourse = TextEditingController();
 
-@override
+  @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     controllerAddCourse.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -38,12 +39,7 @@ class _AddCourseBottomSheetState extends State<AddCourseBottomSheet> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text('Give your new course a name',
-              style: GoogleFonts.dmSans(
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w500),
-              ).copyWith(color: Colors.black)),
+              style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(
             height: 15,
           ),
@@ -56,16 +52,11 @@ class _AddCourseBottomSheetState extends State<AddCourseBottomSheet> {
                     borderRadius: BorderRadius.circular(8.0),
                     borderSide: BorderSide.none),
                 hintText: 'Enter a course name',
-                hintStyle: GoogleFonts.dmSans(
-                    textStyle: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: Colors.grey.shade600, fontSize: 14))),
-            style: GoogleFonts.dmSans(
-                textStyle: Theme.of(context)
+                hintStyle: Theme.of(context)
                     .textTheme
                     .bodySmall
-                    ?.copyWith(color: Colors.black, fontSize: 14)),
+                    ?.copyWith(color: Colors.grey.shade600)),
+            style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(
             height: 35,
@@ -73,8 +64,8 @@ class _AddCourseBottomSheetState extends State<AddCourseBottomSheet> {
           CustomButton(
             onTap: () {
               print('Button clicked');
-              Future<int> future =
-                  widget.isarService.saveCourse(Course(controllerAddCourse.text));
+              Future<int> future = widget.isarService
+                  .saveCourse(Course(controllerAddCourse.text));
 
               controllerAddCourse.clear();
               future.then((int value) {

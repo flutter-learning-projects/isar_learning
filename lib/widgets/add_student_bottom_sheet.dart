@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:isar_learning/data/course.dart';
+import 'package:isar_learning/data/student.dart';
 import 'package:isar_learning/service/isar_service.dart';
 import 'package:isar_learning/widgets/custom_button.dart';
 import 'package:isar_learning/widgets/custom_multiselection.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class AddStudentBottomSheet extends StatefulWidget {
   final IsarService isarService;
@@ -16,7 +16,6 @@ class AddStudentBottomSheet extends StatefulWidget {
 }
 
 class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
-  IsarService isarService = IsarService();
   List<Course>? courses;
   Course? _course;
 
@@ -24,7 +23,7 @@ class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
 
   @override
   void initState() {
-    isarService.getAllCourses().then((value) {
+    widget.isarService.getAllCourses().then((value) {
       setState(() {
         // spinnerItems = value.map((e) => e.title).toList();
         courses = value;
@@ -54,7 +53,7 @@ class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text('Add new teacher',
+          Text('Add new student',
               style: GoogleFonts.dmSans(
                 textStyle: Theme.of(context)
                     .textTheme
@@ -111,6 +110,25 @@ class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
           ),
           CustomButton(
             onTap: () {
+              var student = Student();
+              var selectedCourses =
+                  courses?.where((element) => element.isSelected);
+
+              student.name = controllerAddStudent.text;
+              student.courses.addAll(selectedCourses ?? List.empty());
+              controllerAddStudent.clear();
+              if (selectedCourses != null) {
+                Future<int> future = widget.isarService.saveStudent(student);
+                future.then((int value) {
+                  // Invoked when the future is completed with a value.
+                  print(
+                      'value : $value'); // The successor is completed with the value 42.
+                }, onError: (e) {
+                  print('error: $e');
+                  // Invoked when the future is completed with an error.
+                });
+              }
+
               Navigator.of(context).pop();
             },
             buttonText: "Add Student",
