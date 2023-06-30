@@ -5,8 +5,10 @@ import 'package:isar_learning/service/isar_service.dart';
 
 class CustomDropDown extends StatefulWidget {
   final ValueChanged<Course?> onChanged;
+  final Course? course;
 
-  const CustomDropDown({super.key, required this.onChanged});
+  const CustomDropDown(
+      {super.key, required this.onChanged, required this.course});
 
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();
@@ -20,11 +22,20 @@ class _CustomDropDownState extends State<CustomDropDown> {
 
   @override
   void initState() {
+    setState(() {
+      // _course = widget.course;
+      // widget.onChanged.call(_course);
+    });
     isarService.getAllCourses().then((value) {
       setState(() {
         // spinnerItems = value.map((e) => e.title).toList();
         courses = value;
         _course = value[0];
+        if (widget.course != null) {
+          _course = value
+              .firstWhere((element) => element.title == widget.course!.title);
+        }
+
         // dropdownValue = spinnerItems?[0];
         widget.onChanged.call(_course);
       });

@@ -34,9 +34,26 @@ class IsarService {
     return status;
   }
 
+  Future<bool> deleteTeacher(Teacher teacher) async {
+    final isar = await db;
+    return isar.writeTxnSync<bool>(() => isar.teachers.deleteSync(teacher.id));
+
+    // isar.courses.sy
+  }
+
   Future<List<Course>> getAllCourses() async {
     final isar = await db;
     return await isar.courses.where().findAll();
+  }
+
+  Future<List<Teacher>> getAllTeachers() async {
+    final isar = await db;
+    return await isar.teachers.where().findAll();
+  }
+
+  Future<List<Student>> getAllStudents() async {
+    final isar = await db;
+    return await isar.students.where().findAll();
   }
 
   Stream<List<Course>> listenToCourse() async* {

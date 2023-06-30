@@ -8,8 +8,9 @@ import 'package:isar_learning/widgets/custom_multiselection.dart';
 
 class AddStudentBottomSheet extends StatefulWidget {
   final IsarService isarService;
-
-  const AddStudentBottomSheet({super.key, required this.isarService});
+  final Student? student;
+  const AddStudentBottomSheet(
+      {super.key, required this.isarService, required this.student});
 
   @override
   State<AddStudentBottomSheet> createState() => _AddStudentBottomSheetState();
@@ -17,12 +18,14 @@ class AddStudentBottomSheet extends StatefulWidget {
 
 class _AddStudentBottomSheetState extends State<AddStudentBottomSheet> {
   List<Course>? courses;
-  Course? _course;
 
   final controllerAddStudent = TextEditingController();
 
   @override
   void initState() {
+    setState(() {
+      controllerAddStudent.text = widget.student?.name ?? '';
+    });
     widget.isarService.getAllCourses().then((value) {
       setState(() {
         // spinnerItems = value.map((e) => e.title).toList();

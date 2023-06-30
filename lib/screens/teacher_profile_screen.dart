@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:isar_learning/data/course.dart';
-import 'package:isar_learning/data/student.dart';
 
-class TeacherScreen extends StatefulWidget {
+class TeacherProfileScreen extends StatefulWidget {
   final String title;
   final Course course;
-  const TeacherScreen({super.key, required this.title, required this.course});
+  const TeacherProfileScreen(
+      {super.key, required this.title, required this.course});
 
   @override
-  State<TeacherScreen> createState() => _TeacherScreenState();
+  State<TeacherProfileScreen> createState() => _TeacherProfileScreenState();
 }
 
-class _TeacherScreenState extends State<TeacherScreen> {
+class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
